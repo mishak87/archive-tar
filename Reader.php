@@ -160,7 +160,7 @@ class Reader implements \Iterator {
 		} else {
 			$header = fread($this->file, self::BLOCK_SIZE);
 			$record = unpack("a100name/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1type/a100symlink/a6magic/a2version/a32owner/a32group/a8deviceMajor/a8deviceMinor/a155prefix/a12unpacked", $header);
-			$record['filename'] = $unpacked['prefix'] . $unpacked['name'];
+			$record['filename'] = $record['prefix'] . $record['name'];
 			// convert to decimal values
 			foreach (array('uid', 'gid', 'size', 'mtime', 'checksum') as $key) {
 				$record[$key] = octdec($record[$key]);

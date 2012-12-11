@@ -37,7 +37,7 @@ class Reader implements \Iterator {
 		} elseif (preg_match('/\.tar$/', $this->filename)) {
 			$this->compression = self::NONE;
 		} else {
-			throw new Exceptioln("Unsupported compression '$this->filename'.");
+			throw new Exception("Unsupported compression '$this->filename'.");
 		}
 	}
 

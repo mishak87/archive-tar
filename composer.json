@@ -12,10 +12,10 @@
 		}
 	],
 	"autoload":{
-        "psr-0":{
-            "Mishak\\ArchiveTar":""
-        }
-    },
+		"psr-0":{
+			"Mishak\\ArchiveTar":""
+		}
+	},
 	"require": {
 		"php": ">=5.3.0"
 	}

@@ -187,7 +187,7 @@ class Reader implements \Iterator {
 			}
 
 			$file['contents'] = NULL;
-			if ($length == 0 && is_callback($this->readContents)) {
+			if ($length == 0 && is_callable($this->readContents)) {
 				call_user_func($this->readContents, $record, '', 0, 0);
 			}
 			while ($length > 0) {
@@ -199,11 +199,11 @@ class Reader implements \Iterator {
 					$length = 0;
 				}
 
-				if ($this->contents === FALSE) {
+				if ($this->readContents === FALSE) {
 					fseek($this->file, $read, SEEK_CUR);
 				} else {
 					$chunk = fread($this->file, $read);
-					if (is_callback($this->readContents)) {
+					if (is_callable($this->readContents)) {
 						call_user_func($this->readContents, $record, $chunk, $length, $read);
 					} else {
 						$file['contents'] .= $read;

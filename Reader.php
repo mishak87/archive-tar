@@ -34,7 +34,7 @@ class Reader implements \Iterator {
 			$this->compression = self::GZIP;
 		} elseif (preg_match('/\.(tar\.bz2|tbz|tb2)$/', $this->filename)) {
 			$this->compression = self::BZIP2;
-		} elseif (preg_match('/\.tar$/')) {
+		} elseif (preg_match('/\.tar$/', $this->filename)) {
 			$this->compression = self::NONE;
 		} else {
 			throw new Exceptioln("Unsupported compression '$this->filename'.");

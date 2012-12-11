@@ -1,0 +1,22 @@
+{
+	"name": "mishak/archive-tar",
+	"description": "Archive TAR reader for PHP - supports gz, bz2 and files over 2 GB",
+	"keywords": [ "archive", "tar", "reader"],
+	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"authors": [
+		{
+			"name": "Michal Gebauer",
+			"email": "mishak@mishak.net",
+			"homepage": "https://mishak.net",
+			"role": "developer"
+		}
+	],
+	"autoload":{
+        "psr-0":{
+            "Mishak\\ArchiveTar":""
+        }
+    },
+	"require": {
+		"php": ">=5.3.0"
+	}
+}

@@ -173,7 +173,7 @@ class Reader implements \Iterator {
 
 			$checksum = 0;
 			for ($i = 0; $i < self::BLOCK_SIZE; $i++) {
-				$checksum += 148 <= $i && $i <= 156 ? 32 : ord($header[$i]);
+				$checksum += 148 <= $i && $i < 156 ? 32 : ord($header[$i]);
 			}
 			if ($record['checksum'] != $checksum) {
 				throw new \Exception('Archive is corrupted.');

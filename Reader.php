@@ -2,8 +2,6 @@
 
 namespace Mishak\ArchiveTar;
 
-use Exception;
-
 class Reader implements \Iterator {
 
 
@@ -37,7 +35,7 @@ class Reader implements \Iterator {
 		} elseif (preg_match('/\.tar$/', $this->filename)) {
 			$this->compression = self::NONE;
 		} else {
-			throw new Exception("Unsupported compression '$this->filename'.");
+			throw new ReaderException("Unsupported compression '$this->filename'.");
 		}
 	}
 
@@ -55,7 +53,7 @@ class Reader implements \Iterator {
 		list($open,) = $this->manipulation[$this->compression];
 		$this->file = $open($this->filename, 'rb');
 		if (!$this->file) {
-			throw new \Exception("Cannot open file '$this->filename'.");
+			throw new ReaderException("Cannot open file '$this->filename'.");
 		}
 	}
 
@@ -126,7 +124,7 @@ class Reader implements \Iterator {
 		if (0 < $buffer && $buffer <= PHP_INT_MAX) {
 			$this->buffer = $buffer;
 		} else {
-			throw new Exception("Buffer must be greater then 0 and less or equal to " . PHP_INT_MAX . " (PHP_INT_MAX).");
+			throw new ReaderException("Buffer must be greater then 0 and less or equal to " . PHP_INT_MAX . " (PHP_INT_MAX).");
 		}
 	}
 
@@ -168,7 +166,7 @@ class Reader implements \Iterator {
 			if ($record['checksum'] == 0x00000000) {
 				return NULL;
 			} elseif (0 !== strpos($record['magic'], 'ustar')) {
-				throw new \Exception('Unsupported archive type.');
+				throw new ReaderException('Unsupported archive type.');
 			}
 
 			$checksum = 0;
@@ -176,7 +174,7 @@ class Reader implements \Iterator {
 				$checksum += 148 <= $i && $i < 156 ? 32 : ord($header[$i]);
 			}
 			if ($record['checksum'] != $checksum) {
-				throw new \Exception('Archive is corrupted.');
+				throw new ReaderException('Archive is corrupted.');
 			}
 
 			$length = $record['size'];

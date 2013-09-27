@@ -40,6 +40,9 @@ class Reader implements \Iterator {
 	}
 
 
+	const MANIPULATION_OPEN = 0,
+		MANIPULATION_CLOSE = 1;
+
 	private $manipulation = array(
 		self::GZIP => array('gzopen', 'gzclose'),
 		self::BZIP2 => array('bzopen', 'bzclose'),
@@ -50,8 +53,7 @@ class Reader implements \Iterator {
 
 	private function open()
 	{
-		list($open,) = $this->manipulation[$this->compression];
-		$this->file = $open($this->filename, 'rb');
+		$this->file = $this->manipulation[$this->compression][self::MANIPULATION_OPEN]($this->filename, 'rb');
 		if (!$this->file) {
 			throw new ReaderException("Cannot open file '$this->filename'.");
 		}
@@ -60,8 +62,7 @@ class Reader implements \Iterator {
 
 	private function close()
 	{
-		list(, $close) = $this->manipulation[$this->compression];
-		$close($this->file);
+		$this->manipulation[$this->compression][self::MANIPULATION_CLOSE]($this->file);
 		$this->file = NULL;
 	}
 

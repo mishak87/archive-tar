@@ -30,7 +30,7 @@ class Reader implements \Iterator {
 	{
 		if (preg_match('/\.(tar\.gz|tgz)$/', $this->filename)) {
 			$this->compression = self::GZIP;
-		} elseif (preg_match('/\.(tar\.bz2|tbz|tb2)$/', $this->filename)) {
+		} elseif (preg_match('/\.(tar\.bz2|tbz|tb2|tbz2)$/', $this->filename)) {
 			$this->compression = self::BZIP2;
 		} elseif (preg_match('/\.tar$/', $this->filename)) {
 			$this->compression = self::NONE;

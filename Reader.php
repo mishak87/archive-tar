@@ -22,6 +22,7 @@ class Reader implements \Iterator {
 
 	const GZIP = 'gz',
 		BZIP2 = 'bz2',
+		XZ = 'xz',
 		NONE = 'none';
 
 	private $compression;
@@ -32,6 +33,8 @@ class Reader implements \Iterator {
 			$this->compression = self::GZIP;
 		} elseif (preg_match('/\.(tar\.bz2|tbz|tb2|tbz2)$/', $this->filename)) {
 			$this->compression = self::BZIP2;
+		} elseif (preg_match('/\.(tar\.xz|txz)$/', $this->filename)) {
+			$this->compression = self::XZ;
 		} elseif (preg_match('/\.tar$/', $this->filename)) {
 			$this->compression = self::NONE;
 		} else {
@@ -43,6 +46,7 @@ class Reader implements \Iterator {
 	private $filters = array(
 		self::GZIP => 'zlib.inflate',
 		self::BZIP2 => 'bzip2.decompress',
+		self::XZ => 'compress.lzma',
 		self::NONE => NULL,
 	);
 

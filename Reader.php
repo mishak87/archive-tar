@@ -40,20 +40,20 @@ class Reader implements \Iterator {
 	}
 
 
-	const MANIPULATION_OPEN = 0,
-		MANIPULATION_CLOSE = 1;
-
-	private $manipulation = array(
-		self::GZIP => array('gzopen', 'gzclose'),
-		self::BZIP2 => array('bzopen', 'bzclose'),
-		self::NONE => array('fopen', 'fclose'),
+	private $filters = array(
+		self::GZIP => 'zlib.inflate',
+		self::BZIP2 => 'bzip2.decompress',
+		self::NONE => NULL,
 	);
 
 	private $file;
 
 	private function open()
 	{
-		$this->file = $this->manipulation[$this->compression][self::MANIPULATION_OPEN]($this->filename, 'rb');
+		$this->file = fopen($this->filename, 'rb');
+		if ($this->filters[$this->compression] !== NULL) {
+			stream_filter_append($this->file, $this->filters[$this->compression]);
+		}
 		if (!$this->file) {
 			throw new ReaderException("Cannot open file '$this->filename'.");
 		}

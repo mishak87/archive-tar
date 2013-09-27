@@ -5,7 +5,9 @@ Simple tool for reading TAR archives in PHP. Supports records with size larger t
 
 **Supports only USTAR format.** This should be the most used TAR format after 1988.
 
-Gz and bz2 compressions are transparently supported via detection from filename extension.
+Gz, bz2 and xz compressions are transparently supported via detection from filename extension.
+
+For xz support you must have [php-xz](https://github.com/payden/php-xz) installed.
 
 ## Installation
 

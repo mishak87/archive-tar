@@ -124,7 +124,7 @@ class Reader implements \Iterator {
 		if (0 < $buffer && $buffer <= PHP_INT_MAX) {
 			$this->buffer = $buffer;
 		} else {
-			throw new ReaderException("Buffer must be greater then 0 and less or equal to " . PHP_INT_MAX . " (PHP_INT_MAX).");
+			throw new ReaderException("Buffer must be greater than 0 and less or equal to " . PHP_INT_MAX . " (PHP_INT_MAX).");
 		}
 	}
 

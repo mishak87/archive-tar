@@ -4,13 +4,21 @@ namespace Mishak\ArchiveTar;
 
 class Reader implements \Iterator {
 
-
+	private $compression;
 	private $filename;
 
-	public function __construct($filename)
+	public function __construct($filename, $compression = self::DETECT)
 	{
 		$this->filename = $filename;
-		$this->detectCompression();
+
+		if ($compression === self::DETECT) {
+			$this->detectCompression();
+		} elseif (is_string($this->compression)) {
+			$this->compression = $compression;
+		} else {
+			throw new \InvalidArgumentException;
+		}
+
 		$this->open();
 	}
 
@@ -19,12 +27,10 @@ class Reader implements \Iterator {
 		$this->close();
 	}
 
-
 	const GZIP = 'gz',
 		BZIP2 = 'bz2',
-		NONE = 'none';
-
-	private $compression;
+		NONE = 'none',
+		DETECT = null;
 
 	private function detectCompression()
 	{
@@ -38,7 +44,6 @@ class Reader implements \Iterator {
 			throw new ReaderException("Unsupported compression '$this->filename'.");
 		}
 	}
-
 
 	const MANIPULATION_OPEN = 0,
 		MANIPULATION_CLOSE = 1;
